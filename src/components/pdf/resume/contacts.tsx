@@ -1,12 +1,4 @@
-import {
-  Page,
-  Text,
-  Link,
-  View,
-  Document,
-  Font,
-  StyleSheet,
-} from "@react-pdf/renderer";
+import { Link, View, Font, StyleSheet } from "@react-pdf/renderer";
 import type { ResumeData } from "~/types/resume";
 
 Font.register({
@@ -19,20 +11,6 @@ Font.register({
 });
 
 const styles = StyleSheet.create({
-  document: {
-    height: 800,
-  },
-  page: {
-    backgroundColor: "#E4E4E4",
-    padding: 20,
-    flexDirection: "column",
-  },
-  header: {
-    fontSize: 24,
-    marginBottom: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   contacts: {
     fontFamily: ["Helvetica", "FontAwesome", "FontAwesomeBrands"],
     fontSize: 12,
@@ -45,19 +23,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const ResumeHeader = ({ resumeData }: { resumeData: ResumeData }) => (
-  <View style={styles.header}>
-    <Text>{resumeData.name}</Text>
-  </View>
-);
-
-const fontIcons = {
+export const fontIcons = {
   github: "",
   linkedin: "",
   email: "",
 };
 
-const Contacts = ({ resumeData }: { resumeData: ResumeData }) => (
+export const Contacts = ({ resumeData }: { resumeData: ResumeData }) => (
   <View style={styles.contacts}>
     {!!resumeData.contacts?.linkedin && (
       <Link src={resumeData.contacts.linkedin}>
@@ -75,13 +47,4 @@ const Contacts = ({ resumeData }: { resumeData: ResumeData }) => (
       {fontIcons.email} {resumeData.email}
     </Link>
   </View>
-);
-
-export const Resume = ({ resumeData }: { resumeData: ResumeData }) => (
-  <Document style={styles.document}>
-    <Page size="A4" style={styles.page}>
-      <ResumeHeader resumeData={resumeData} />
-      <Contacts resumeData={resumeData} />
-    </Page>
-  </Document>
 );
