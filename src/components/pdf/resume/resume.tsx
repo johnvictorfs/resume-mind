@@ -1,6 +1,7 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import type { ResumeData } from "~/types/resume";
 import { Contacts } from "./contacts";
+import { Experiences } from "./experiences";
 
 const styles = StyleSheet.create({
   document: {
@@ -33,6 +34,8 @@ export const Resume = ({ resumeData }: { resumeData: ResumeData }) => (
   <Document style={styles.document}>
     <Page size="A4" style={styles.page}>
       <ResumeHeader resumeData={resumeData} />
+
+      <Experiences resumeData={resumeData} />
     </Page>
   </Document>
 );

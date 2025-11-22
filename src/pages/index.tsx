@@ -1,6 +1,6 @@
 "use client";
 import Head from "next/head";
-import { Preview } from "~/components/pdf/preview";
+import { Preview } from "~/components/pdf/resume/preview";
 
 import { authClient } from "~/server/better-auth/client";
 import type { ResumeData } from "~/types/resume";
@@ -22,10 +22,21 @@ export default function Home() {
         company: "Tech Corp",
         role: "Senior Software Engineer",
         startAt: new Date("2020-01-01"),
-        endAt: new Date("2022-01-01"),
+        endAt: null,
         bulletPoints: [
           "Led a team of 5 engineers to develop a scalable web application.",
           "Improved application performance by 30% through code optimization.",
+        ],
+      },
+
+      {
+        company: "Web Solutions",
+        role: "Frontend Developer",
+        startAt: new Date("2018-06-01"),
+        endAt: new Date("2019-12-01"),
+        bulletPoints: [
+          "Developed responsive user interfaces using React and Redux.",
+          "Collaborated with designers to enhance UX/UI design.",
         ],
       },
     ],
