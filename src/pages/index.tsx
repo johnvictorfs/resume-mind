@@ -4,10 +4,9 @@ import { Preview } from "~/components/pdf/preview";
 
 import { authClient } from "~/server/better-auth/client";
 import type { ResumeData } from "~/types/resume";
-import { api } from "~/utils/api";
 
 export default function Home() {
-  const { data: sessionData, isPending } = authClient.useSession();
+  const { data: sessionData } = authClient.useSession();
 
   const resumeData: ResumeData = {
     name: "John Doe",
