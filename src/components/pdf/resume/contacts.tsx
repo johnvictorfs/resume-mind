@@ -1,5 +1,5 @@
 import { Link, View, Font, StyleSheet } from "@react-pdf/renderer";
-import type { ResumeData } from "~/types/resume";
+import type { ResumeData } from "~/schemas/resume";
 import { getBaseFontFamily } from "./config";
 
 Font.register({

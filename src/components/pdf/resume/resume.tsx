@@ -1,5 +1,5 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import type { ResumeData } from "~/types/resume";
+import type { ResumeData } from "~/schemas/resume";
 import { Contacts } from "./contacts";
 import { Experiences } from "./experiences";
 

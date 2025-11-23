@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text } from "@react-pdf/renderer";
-import type { Experience, ResumeData } from "~/types/resume";
+import type { Experience, ResumeData } from "~/schemas/resume";
 import { getBaseFontFamily } from "./config";
 
 const styles = StyleSheet.create({

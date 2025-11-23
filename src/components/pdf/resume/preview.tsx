@@ -1,4 +1,4 @@
-import type { ResumeData } from "~/types/resume";
+import type { ResumeData } from "~/schemas/resume";
 import { Resume } from "./resume";
 import { PDFViewer } from "../viewer";
 
