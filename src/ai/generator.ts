@@ -43,6 +43,7 @@ export const generateResumeData = async (
 
 export const _exampleResumeData: ResumeData = {
 	name: "John Doe",
+	summary: null,
 	email: "john.doe@email.com",
 	contacts: {
 		linkedin: "https://linkedin.com/in/johndoe",
