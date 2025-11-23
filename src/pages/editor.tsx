@@ -3,8 +3,9 @@
 import { Download, RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "~/components/ui/button";
+import { useDebounce } from "~/lib/input";
 import { getResumeData, saveResumeData } from "~/lib/storage";
 import type { ResumeData } from "~/schemas/resume";
 import { BackgroundEffect } from "~/widgets/background-effect";
@@ -42,10 +43,10 @@ export default function ResumeBuilder() {
 	const [data, setData] = useState<ResumeData>(initialData);
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [showImport, setShowImport] = useState(false);
+	const debouncedData = useDebounce(data, 800);
 
 	useEffect(() => {
 		const existingResumeData = getResumeData();
-		console.log(existingResumeData);
 
 		if (existingResumeData) {
 			setData(existingResumeData);
@@ -69,6 +70,15 @@ export default function ResumeBuilder() {
 		setData(newData);
 		saveResumeData(newData);
 	}
+
+	const DebouncedPreview = useMemo(
+		() => (
+			<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
+				<Preview isGenerating={isGenerating} resumeData={debouncedData} />
+			</div>
+		),
+		[debouncedData, isGenerating],
+	);
 
 	if (showImport) {
 		return (
@@ -151,9 +161,7 @@ export default function ResumeBuilder() {
 									</div>
 								</div>
 
-								<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
-									<Preview isGenerating={isGenerating} resumeData={data} />
-								</div>
+								{DebouncedPreview}
 							</div>
 						</div>
 					</div>
