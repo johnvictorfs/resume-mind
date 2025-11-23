@@ -3,7 +3,8 @@
 import { Download, RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import { Preview } from "~/components/pdf/resume/preview";
 import { Button } from "~/components/ui/button";
 import { useDebounce } from "~/lib/input";
 import { getResumeData, saveResumeData } from "~/lib/storage";
@@ -13,16 +14,9 @@ import { Header } from "~/widgets/header";
 import { ResumeForm } from "~/widgets/resume-form";
 import { ResumeImport } from "~/widgets/resume-import";
 
-export const Preview = dynamic(
-	() => import("~/components/pdf/resume/preview").then((mod) => mod.Preview),
-	{
-		ssr: false,
-		loading: () => (
-			<div className="flex h-[800px] w-full items-center justify-center rounded border border-muted bg-muted/50">
-				<p className="text-muted-foreground">Loading...</p>
-			</div>
-		),
-	},
+const DownloadLinkPDF = dynamic(
+	() => import("~/lib/pdf").then((mod) => mod.DownloadLinkPDF),
+	{ ssr: false },
 );
 
 const initialData: ResumeData = {
@@ -44,6 +38,7 @@ export default function ResumeBuilder() {
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [showImport, setShowImport] = useState(false);
 	const debouncedData = useDebounce(data, 800);
+	const debouncedGenerating = useDebounce(isGenerating, 800);
 
 	useEffect(() => {
 		const existingResumeData = getResumeData();
@@ -71,14 +66,10 @@ export default function ResumeBuilder() {
 		saveResumeData(newData);
 	}
 
-	const DebouncedPreview = useMemo(
-		() => (
-			<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
-				<Preview isGenerating={isGenerating} resumeData={debouncedData} />
-			</div>
-		),
-		[debouncedData, isGenerating],
-	);
+	const { document, domRender: PreviewRender } = Preview({
+		resumeData: debouncedData,
+		isGenerating: debouncedGenerating,
+	});
 
 	if (showImport) {
 		return (
@@ -154,14 +145,23 @@ export default function ResumeBuilder() {
 											)}
 											{isGenerating ? "Optimizing..." : "AI Enhance"}
 										</Button>
-										<Button className="bg-white text-black hover:bg-gray-200">
-											<Download className="mr-2 h-4 w-4" />
-											Export PDF
+										<Button
+											className="bg-white text-black hover:bg-gray-200"
+											disabled={!document}
+										>
+											<DownloadLinkPDF document={document}>
+												<div className="flex items-center">
+													<Download className="mr-2 h-4 w-4" />
+													Export PDF
+												</div>
+											</DownloadLinkPDF>
 										</Button>
 									</div>
 								</div>
 
-								{DebouncedPreview}
+								<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
+									{PreviewRender}
+								</div>
 							</div>
 						</div>
 					</div>

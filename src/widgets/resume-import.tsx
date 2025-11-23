@@ -212,7 +212,7 @@ export function ResumeImport({ onImport, onCancel }: ResumeImportProps) {
 					onClick={onCancel}
 					variant="ghost"
 				>
-					Skip and start from scratch
+					Skip import, input data manually
 				</Button>
 			</div>
 		</div>

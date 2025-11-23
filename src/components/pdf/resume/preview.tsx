@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import type { ResumeData } from "~/schemas/resume";
 import { PDFViewer } from "../viewer";
 import { Resume } from "./resume";
@@ -18,19 +18,30 @@ export const Preview = ({
 		count.current++;
 	}, [resumeData]);
 
+	const Document = useMemo(
+		() => <Resume resumeData={resumeData} />,
+		[resumeData],
+	);
+
 	if (isGenerating) {
-		return (
-			<div className="flex h-[800px] w-full items-center justify-center rounded border border-muted bg-muted/50">
-				<p className="text-muted-foreground">Generating preview...</p>
-			</div>
-		);
+		return {
+			domRender: (
+				<div className="flex h-[800px] w-full items-center justify-center rounded border border-muted bg-muted/50">
+					<p className="text-muted-foreground">Generating preview...</p>
+				</div>
+			),
+			document: null,
+		};
 	}
 
-	return (
-		<div className="h-[800px] w-full">
-			<PDFViewer height={900} key={count.current} width="100%">
-				<Resume resumeData={resumeData} />
-			</PDFViewer>
-		</div>
-	);
+	return {
+		domRender: (
+			<div className="h-[800px] w-full">
+				<PDFViewer height={900} key={count.current} width="100%">
+					{Document}
+				</PDFViewer>
+			</div>
+		),
+		document: Document,
+	};
 };
