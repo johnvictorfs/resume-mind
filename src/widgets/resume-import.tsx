@@ -10,19 +10,17 @@ import {
 	Upload,
 } from "lucide-react";
 import { useState } from "react";
+import { generateResumeData, getModel } from "~/ai/generator";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
 import type { ResumeData } from "~/schemas/resume";
 
-function generateResumeFromText(text: string) {
-	// TODO: Placeholder
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve(null);
-		}, 2000);
-	});
+function generateResumeFromText(text: string): Promise<ResumeData> {
+	const model = getModel();
+
+	return generateResumeData(text, model);
 }
 
 function generateResumeFromPdf(formData: FormData) {

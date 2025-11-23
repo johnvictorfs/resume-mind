@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { getApiKey, saveApiKey } from "~/lib/config";
+import { getApiKey, saveApiKey } from "~/lib/storage";
 import { ApiKeyInput } from "~/widgets/api-key-input";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";

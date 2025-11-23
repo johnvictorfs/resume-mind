@@ -3,8 +3,9 @@
 import { Download, RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
+import { getResumeData, saveResumeData } from "~/lib/storage";
 import type { ResumeData } from "~/schemas/resume";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";
@@ -24,65 +25,50 @@ export const Preview = dynamic(
 );
 
 const initialData: ResumeData = {
-	name: "Alex Chen",
-	email: "alex.chen@example.com",
 	contacts: {
-		linkedin: "linkedin.com/in/alexchen",
-		github: "github.com/alexchen",
+		github: "",
+		linkedin: "",
 	},
-	summary:
-		"Experienced Software Engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success. Proficient in technology and writing code to create reliable and user-friendly systems.",
-	phone: "+1 (555) 012-3456",
-	skills: [
-		"React",
-		"TypeScript",
-		"Node.js",
-		"Next.js",
-		"AWS",
-		"PostgreSQL",
-		"System Design",
-		"Docker",
-	],
-	experience: [
-		{
-			company: "TechFlow Inc.",
-			role: "Senior Software Engineer",
-			startAt: new Date("2021-03-01"),
-			endAt: null, // Present
-			bulletPoints: [
-				"Led the migration of a monolithic architecture to microservices, reducing deployment time by 40%.",
-				"Mentored junior developers and established code quality standards.",
-			],
-		},
-	],
-	education: [
-		{
-			institution: "University of Technology",
-			degree: "B.S. Computer Science",
-			startAt: new Date("2016-09-01"),
-			endAt: new Date("2020-05-01"),
-			notes: "Graduated Summa Cum Laude",
-		},
-	],
-};
+	skills: [],
+	experience: [],
+	education: [],
+	email: "",
+	name: "",
+	phone: "",
+	summary: "",
+} as const;
 
 export default function ResumeBuilder() {
 	const [data, setData] = useState<ResumeData>(initialData);
 	const [isGenerating, setIsGenerating] = useState(false);
 	const [showImport, setShowImport] = useState(false);
 
-	const handleGenerate = () => {
+	useEffect(() => {
+		const existingResumeData = getResumeData();
+		console.log(existingResumeData);
+
+		if (existingResumeData) {
+			setData(existingResumeData);
+		}
+	}, []);
+
+	function handleGenerate() {
 		setIsGenerating(true);
 		// Simulate AI Generation
 		setTimeout(() => {
 			setIsGenerating(false);
 		}, 2000);
-	};
+	}
 
-	const handleImport = (newData: ResumeData) => {
+	function handleImport(newData: ResumeData) {
 		setData(newData);
 		setShowImport(false);
-	};
+	}
+
+	function updateData(newData: ResumeData) {
+		setData(newData);
+		saveResumeData(newData);
+	}
 
 	if (showImport) {
 		return (
@@ -134,7 +120,7 @@ export default function ResumeBuilder() {
 								</div>
 
 								<div className="custom-scrollbar flex-1 overflow-y-auto rounded-xl border border-white/10 bg-card/50 p-1 pr-2">
-									<ResumeForm data={data} onChange={setData} />
+									<ResumeForm data={data} onChange={updateData} />
 								</div>
 							</div>
 

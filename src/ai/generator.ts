@@ -1,6 +1,6 @@
 import { createOpenAI } from "@ai-sdk/openai";
 import { generateObject, type LanguageModel } from "ai";
-import { getApiKey } from "~/lib/config";
+import { getApiKey } from "~/lib/storage";
 import { type ResumeData, resumeSchema } from "~/schemas/resume";
 
 const instructions = `
