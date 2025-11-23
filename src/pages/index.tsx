@@ -1,52 +1,37 @@
 "use client";
+import { Sparkles } from "lucide-react";
 import Head from "next/head";
 import { useState } from "react";
-import { _exampleResumeData, generateResumeData } from "~/ai/generator";
-import { Preview } from "~/components/pdf/resume/preview";
-import type { ResumeData } from "~/schemas/resume";
-import { authClient } from "~/server/better-auth/client";
+import { ApiKeyInput } from "~/components/api-key-input";
+import { getApiKey, saveApiKey } from "~/lib/config";
 
-const ResumePreview = ({ resumeData }: { resumeData: ResumeData | null }) => {
-	if (!resumeData) {
-		return null;
+const Header = () => (
+	<header className="fixed top-0 z-50 w-full border-white/5 border-b bg-background/80 backdrop-blur-md">
+		<div className="container mx-auto flex h-16 items-center justify-between px-4">
+			<div className="flex items-center gap-2">
+				<div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-primary to-blue-600">
+					<Sparkles className="h-5 w-5 text-white" />
+				</div>
+				<span className="font-bold text-xl tracking-tight">Resume Mind</span>
+			</div>
+		</div>
+	</header>
+);
+
+const BackgroundEffect = () => (
+	<>
+		<div className="pointer-events-none absolute inset-0 bg-grid-white/[0.02]" />
+		<div className="-top-40 -right-40 pointer-events-none absolute h-96 w-96 rounded-full bg-primary/20 blur-3xl" />
+		<div className="-left-20 pointer-events-none absolute top-40 h-72 w-72 rounded-full bg-blue-500/10 blur-3xl" />
+	</>
+);
+
+export default function Homepage() {
+	const [apiKey, setApiKey] = useState<string | null>(getApiKey);
+
+	function updateApiKey(key: string) {
+		setApiKey(saveApiKey(key));
 	}
-
-	return <Preview resumeData={resumeData} />;
-};
-
-export default function Home() {
-	const { data: sessionData } = authClient.useSession();
-	const [loading, setLoading] = useState(false);
-	const [openaiApiKey, setOpenaiApiKey] = useState("");
-	const [prompt, setPrompt] =
-		useState(`My name is John Doe. I am a software engineer with 5 years of experience. my lkd username is johndoe my github is johndoe
-
-  Skills: JavaScript, TypeScript, React, Node.js
-
-  Experience:
-  - Senior Software Engineer at Tech Corp starting jan 2020 to now Led a team of 5 engineers, developed a scalable web application, improved performance by 30% through code optimization.
-  - Frontend Developer at Web Solutions from jun 2018 to dec 2019 Developed responsive user interfaces using React and Redux, collaborated with designers to enhance UX/UI design.
-
-  my email is john.doe@mail.com
-  
-  Education:
-  - B.Sc. in Computer Science from State University from sep 2015 to jun 2019 Graduated with Honors.`);
-
-	// TODO: Remove default example data
-	const [resumeData, setResumeData] = useState<ResumeData | null>(
-		_exampleResumeData,
-	);
-
-	const generate = async () => {
-		setLoading(true);
-		try {
-			const data = await generateResumeData(openaiApiKey, prompt);
-
-			setResumeData(data);
-		} finally {
-			setLoading(false);
-		}
-	};
 
 	return (
 		<>
@@ -58,51 +43,21 @@ export default function Home() {
 				/>
 				<link href="/favicon.ico" rel="icon" />
 			</Head>
-			<main className="flex min-h-screen flex-col items-center justify-center bg-linear-to-b from-[#242948] to-[#151d2c]">
-				{sessionData?.user?.name}
 
-				<div className="mt-4 mb-8 flex flex-col items-start">
-					<div className="mb-4">
-						<label className="mr-2 text-white" htmlFor="openai-api-key">
-							OpenAI API Key:
-						</label>
-						<input
-							className="w-96 rounded-md border border-gray-600 bg-gray-800 p-2 text-white"
-							id="openai-api-key"
-							name="openai-api-key"
-							onChange={({ target }) => setOpenaiApiKey(target.value)}
-							placeholder="sk-..."
-							type="password"
-							value={openaiApiKey}
-						/>
-					</div>
+			<main className="relative min-h-screen overflow-hidden bg-background text-foreground">
+				<BackgroundEffect />
 
-					<div className="mb-4">
-						<label className="mr-2 text-white" htmlFor="prompt">
-							Prompt
-						</label>
-						<textarea
-							className="w-96 rounded-md border border-gray-600 bg-gray-800 p-2 text-white"
-							id="prompt"
-							name="prompt"
-							onChange={({ target }) => setPrompt(target.value)}
-							placeholder="Enter your prompt here..."
-							rows={6}
-							value={prompt}
-						/>
+				<Header />
+
+				<div className="container mx-auto px-4 pt-24 pb-12">
+					<div className="mx-auto max-w-7xl">
+						{apiKey ? (
+							<p>Your OpenAI API Key is set.</p>
+						) : (
+							<ApiKeyInput onComplete={updateApiKey} />
+						)}
 					</div>
 				</div>
-
-				<button
-					className="mb-8 cursor-pointer rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-					disabled={loading}
-					onClick={generate}
-					type="button"
-				>
-					{loading ? "Generating..." : "Generate Resume"}
-				</button>
-
-				<ResumePreview resumeData={resumeData} />
 			</main>
 		</>
 	);
