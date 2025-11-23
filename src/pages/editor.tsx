@@ -112,11 +112,8 @@ export default function ResumeBuilder() {
 											variant="ghost"
 										>
 											<Upload className="mr-2 h-4 w-4" />
-											Import
+											Fill automatically from resume or text
 										</Button>
-										<span className="text-muted-foreground text-xs">
-											AI Powered & Autosaved
-										</span>
 									</div>
 								</div>
 
