@@ -1,6 +1,6 @@
 import { Font, Link, StyleSheet, View } from "@react-pdf/renderer";
 import type { ResumeData } from "~/schemas/resume";
-import { getBaseFontFamily } from "./config";
+import { fontSize, getBaseFontFamily } from "../styles";
 
 Font.register({
 	family: "FontAwesomeBrands",
@@ -14,7 +14,7 @@ Font.register({
 const styles = StyleSheet.create({
 	contacts: {
 		fontFamily: [getBaseFontFamily(), "FontAwesome", "FontAwesomeBrands"],
-		fontSize: 12,
+		fontSize: fontSize.normal,
 		flexDirection: "row",
 		justifyContent: "space-around",
 		alignItems: "center",

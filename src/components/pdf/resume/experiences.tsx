@@ -1,40 +1,31 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import { formatDateRange } from "~/logic/date";
 import type { Experience } from "~/schemas/resume";
-import { getBaseFontFamily } from "./config";
+import { baseStyles, fontSize } from "../styles";
 
 const styles = StyleSheet.create({
-	header: {
-		fontFamily: getBaseFontFamily(),
-		fontSize: 18,
-		fontWeight: "bold",
-		borderBottom: 1,
-		borderBottomColor: "#000000",
-		borderBottomWidth: 1,
-		marginBottom: 10,
-	},
 	experiencesContainer: {
 		display: "flex",
 		flexDirection: "column",
 		gap: 10,
 	},
 	company: {
-		fontSize: 14,
+		fontSize: fontSize.large,
 		fontWeight: "bold",
 	},
 	role: {
-		fontSize: 12,
+		fontSize: fontSize.normal,
 		fontStyle: "italic",
 	},
 	dateRange: {
-		fontSize: 10,
+		fontSize: fontSize.small,
 		marginBottom: 5,
 	},
 	bulletPointContainer: {
 		marginLeft: 10,
 	},
 	bulletPoint: {
-		fontSize: 10,
+		fontSize: fontSize.small,
 	},
 });
 
@@ -69,7 +60,7 @@ export const Experiences = ({
 
 	return (
 		<View>
-			<View style={styles.header}>
+			<View style={baseStyles.sectionHeader}>
 				<Text>Experience</Text>
 			</View>
 

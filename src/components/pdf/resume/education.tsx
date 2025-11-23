@@ -1,33 +1,24 @@
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
 import { formatDateRange } from "~/logic/date";
 import type { Education } from "~/schemas/resume";
-import { getBaseFontFamily } from "./config";
+import { baseStyles, fontSize } from "../styles";
 
 const styles = StyleSheet.create({
-	header: {
-		fontFamily: getBaseFontFamily(),
-		fontSize: 18,
-		fontWeight: "bold",
-		borderBottom: 1,
-		borderBottomColor: "#000000",
-		borderBottomWidth: 1,
-		marginBottom: 10,
-	},
 	educationContainer: {
 		display: "flex",
 		flexDirection: "column",
 		gap: 10,
 	},
 	institution: {
-		fontSize: 14,
+		fontSize: fontSize.large,
 		fontWeight: "bold",
 	},
 	degree: {
-		fontSize: 12,
+		fontSize: fontSize.normal,
 		fontStyle: "italic",
 	},
 	dateRange: {
-		fontSize: 10,
+		fontSize: fontSize.small,
 		marginBottom: 5,
 	},
 });
@@ -53,7 +44,7 @@ export const EducationSection = ({
 
 	return (
 		<View>
-			<View style={styles.header}>
+			<View style={baseStyles.sectionHeader}>
 				<Text>Education</Text>
 			</View>
 
