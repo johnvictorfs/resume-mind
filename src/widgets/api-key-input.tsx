@@ -78,7 +78,6 @@ export function ApiKeyInput({ onComplete }: ApiKeyInputProps) {
 							</div>
 						</div>
 
-						{/* bottom of above div */}
 						<div className="mt-2">
 							<Button className="w-full" disabled={!key.trim()} type="submit">
 								Save & Continue
@@ -87,8 +86,7 @@ export function ApiKeyInput({ onComplete }: ApiKeyInputProps) {
 						</div>
 					</div>
 
-					{/* TODO: Link */}
-					<Link href="/">
+					<Link href="/editor">
 						<p className="text-muted-foreground text-sm underline hover:text-primary">
 							Skip for now. I will start without AI features.
 						</p>
