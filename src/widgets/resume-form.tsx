@@ -20,13 +20,13 @@ const formatDate = (date: Date | string | null | undefined) => {
 	if (!date) return "";
 	try {
 		return format(new Date(date), "yyyy-MM");
-	} catch (e) {
+	} catch (_e) {
 		return "";
 	}
 };
 
 export function ResumeForm({ data, onChange }: ResumeFormProps) {
-	const handleChange = (section: keyof ResumeData, value: any) => {
+	const handleChange = (section: keyof ResumeData, value: ResumeData[keyof ResumeData]) => {
 		onChange({ ...data, [section]: value });
 	};
 

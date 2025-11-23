@@ -86,7 +86,7 @@ export function ResumeImport({ onImport, onCancel }: ResumeImportProps) {
 	return (
 		<div className="mx-auto w-full max-w-2xl p-6">
 			<div className="mb-8 space-y-2 text-center">
-				<h2 className="bg-gradient-to-r from-white to-white/60 bg-clip-text font-bold text-3xl text-transparent">
+				<h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-3xl text-transparent">
 					How would you like to start?
 				</h2>
 				<p className="text-muted-foreground">
