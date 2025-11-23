@@ -28,7 +28,7 @@ export const Preview = ({
 
 	return (
 		<div className="h-[800px] w-full">
-			<PDFViewer height={800} key={count.current} width="90%">
+			<PDFViewer height={900} key={count.current} width="100%">
 				<Resume resumeData={resumeData} />
 			</PDFViewer>
 		</div>
