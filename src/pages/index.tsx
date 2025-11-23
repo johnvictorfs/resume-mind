@@ -1,16 +1,27 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { getApiKey, saveApiKey } from "~/lib/config";
 import { ApiKeyInput } from "~/widgets/api-key-input";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";
 
 export default function Homepage() {
-	const [apiKey, setApiKey] = useState<string | null>(getApiKey);
+	const router = useRouter();
 
 	function updateApiKey(key: string) {
-		setApiKey(saveApiKey(key));
+		saveApiKey(key);
+		router.push("/editor");
 	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: get around ssr
+	useEffect(() => {
+		const key = getApiKey();
+
+		if (key) {
+			updateApiKey(key);
+		}
+	}, []);
 
 	return (
 		<>
@@ -30,11 +41,7 @@ export default function Homepage() {
 
 				<div className="container mx-auto px-4 pt-24 pb-12">
 					<div className="mx-auto max-w-7xl">
-						{apiKey ? (
-							<p>Your OpenAI API Key is set.</p>
-						) : (
-							<ApiKeyInput onComplete={updateApiKey} />
-						)}
+						<ApiKeyInput onComplete={updateApiKey} />
 					</div>
 				</div>
 			</main>

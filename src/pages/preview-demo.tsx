@@ -15,7 +15,7 @@ const ResumePreview = ({ resumeData }: { resumeData: ResumeData | null }) => {
 		return null;
 	}
 
-	return <Preview resumeData={resumeData} />;
+	return <Preview isGenerating={false} resumeData={resumeData} />;
 };
 
 export default function ResumePreviewPage() {

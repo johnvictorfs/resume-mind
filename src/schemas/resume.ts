@@ -18,6 +18,7 @@ const educationSchema = z.object({
 
 export const resumeSchema = z.object({
 	name: z.string(),
+	summary: z.string().nullable(),
 	email: z.string().email(),
 	contacts: z.object({
 		linkedin: z.string().url().nullable(),
