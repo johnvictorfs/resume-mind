@@ -26,7 +26,10 @@ const formatDate = (date: Date | string | null | undefined) => {
 };
 
 export function ResumeForm({ data, onChange }: ResumeFormProps) {
-	const handleChange = (section: keyof ResumeData, value: ResumeData[keyof ResumeData]) => {
+	const handleChange = (
+		section: keyof ResumeData,
+		value: ResumeData[keyof ResumeData],
+	) => {
 		onChange({ ...data, [section]: value });
 	};
 

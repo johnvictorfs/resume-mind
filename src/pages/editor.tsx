@@ -2,6 +2,7 @@
 
 import { Download, RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import type { ResumeData } from "~/schemas/resume";
@@ -29,7 +30,8 @@ const initialData: ResumeData = {
 		linkedin: "linkedin.com/in/alexchen",
 		github: "github.com/alexchen",
 	},
-  summary: "Experienced Software Engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success. Proficient in technology and writing code to create reliable and user-friendly systems.",
+	summary:
+		"Experienced Software Engineer with a passion for developing innovative programs that expedite the efficiency and effectiveness of organizational success. Proficient in technology and writing code to create reliable and user-friendly systems.",
 	phone: "+1 (555) 012-3456",
 	skills: [
 		"React",
@@ -92,74 +94,85 @@ export default function ResumeBuilder() {
 	}
 
 	return (
-		<main className="relative min-h-screen bg-background text-foreground">
-			<BackgroundEffect />
-			<Header />
+		<>
+			<Head>
+				<title>Resume Mind - Editor</title>
+				<meta
+					content="AI-powered tool to create your tailored resume"
+					name="description"
+				/>
+				<link href="/favicon.ico" rel="icon" />
+			</Head>
 
-			<div className="container mx-auto px-4 pt-24 pb-12">
-				<div className="mx-auto max-w-7xl">
-					<div className="grid h-[calc(100vh-8rem)] gap-8 lg:grid-cols-2">
-						{/* Left Column: Input Form */}
-						<div className="flex h-full flex-col gap-6">
-							<div className="flex items-center justify-between">
-								<h1 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
-									Editor
-								</h1>
-								<div className="flex items-center gap-2">
-									<Button
-										className="text-muted-foreground hover:text-white"
-										onClick={() => setShowImport(true)}
-										size="sm"
-										variant="ghost"
-									>
-										<Upload className="mr-2 h-4 w-4" />
-										Import
-									</Button>
-									<span className="text-muted-foreground text-xs">
-										AI Powered & Autosaved
-									</span>
+			<main className="relative min-h-screen bg-background text-foreground">
+				<BackgroundEffect />
+				<Header />
+
+				<div className="container mx-auto px-4 pt-24 pb-12">
+					<div className="mx-auto max-w-7xl">
+						<div className="grid h-[calc(100vh-8rem)] gap-8 lg:grid-cols-2">
+							{/* Left Column: Input Form */}
+							<div className="flex h-full flex-col gap-6">
+								<div className="flex items-center justify-between">
+									<h1 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
+										Editor
+									</h1>
+									<div className="flex items-center gap-2">
+										<Button
+											className="text-muted-foreground hover:text-white"
+											onClick={() => setShowImport(true)}
+											size="sm"
+											variant="ghost"
+										>
+											<Upload className="mr-2 h-4 w-4" />
+											Import
+										</Button>
+										<span className="text-muted-foreground text-xs">
+											AI Powered & Autosaved
+										</span>
+									</div>
+								</div>
+
+								<div className="custom-scrollbar flex-1 overflow-y-auto rounded-xl border border-white/10 bg-card/50 p-1 pr-2">
+									<ResumeForm data={data} onChange={setData} />
 								</div>
 							</div>
 
-							<div className="custom-scrollbar flex-1 overflow-y-auto rounded-xl border border-white/10 bg-card/50 p-1 pr-2">
-								<ResumeForm data={data} onChange={setData} />
-							</div>
-						</div>
-
-						{/* Right Column: Preview */}
-						<div className="flex h-full flex-col gap-6">
-							<div className="flex items-center justify-between">
-								<h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
-									Preview
-								</h2>
-								<div className="flex gap-3">
-									<Button
-										className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary-foreground"
-										disabled={isGenerating}
-										onClick={handleGenerate}
-										variant="outline"
-									>
-										{isGenerating ? (
-											<RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-										) : (
-											<Wand2 className="mr-2 h-4 w-4" />
-										)}
-										{isGenerating ? "Optimizing..." : "AI Enhance"}
-									</Button>
-									<Button className="bg-white text-black hover:bg-gray-200">
-										<Download className="mr-2 h-4 w-4" />
-										Export PDF
-									</Button>
+							{/* Right Column: Preview */}
+							<div className="flex h-full flex-col gap-6">
+								<div className="flex items-center justify-between">
+									<h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
+										Preview
+									</h2>
+									<div className="flex gap-3">
+										<Button
+											className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary-foreground"
+											disabled={isGenerating}
+											onClick={handleGenerate}
+											variant="outline"
+										>
+											{isGenerating ? (
+												<RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+											) : (
+												<Wand2 className="mr-2 h-4 w-4" />
+											)}
+											{isGenerating ? "Optimizing..." : "AI Enhance"}
+										</Button>
+										<Button className="bg-white text-black hover:bg-gray-200">
+											<Download className="mr-2 h-4 w-4" />
+											Export PDF
+										</Button>
+									</div>
 								</div>
-							</div>
 
-							<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
-								<Preview isGenerating={isGenerating} resumeData={data} />
+								<div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
+									<Preview isGenerating={isGenerating} resumeData={data} />
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</main>
+			</main>
+		</>
 	);
 }
