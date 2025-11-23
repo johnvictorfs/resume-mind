@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Github } from "./icons/Github";
+import { Github } from "../components/icons/Github";
 
 type ApiKeyInputProps = {
 	onComplete: (key: string) => void;

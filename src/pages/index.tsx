@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useState } from "react";
-import { ApiKeyInput } from "~/components/api-key-input";
-import { BackgroundEffect } from "~/components/background-effect";
-import { Header } from "~/components/header";
 import { getApiKey, saveApiKey } from "~/lib/config";
+import { ApiKeyInput } from "~/widgets/api-key-input";
+import { BackgroundEffect } from "~/widgets/background-effect";
+import { Header } from "~/widgets/header";
 
 export default function Homepage() {
 	const [apiKey, setApiKey] = useState<string | null>(getApiKey);
