@@ -1,5 +1,6 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { generateObject } from "ai";
+import { generateObject, type LanguageModel } from "ai";
+import { getApiKey } from "~/lib/config";
 import { type ResumeData, resumeSchema } from "~/schemas/resume";
 
 const instructions = `
@@ -10,13 +11,24 @@ const instructions = `
 - Add https:// to links
 `;
 
+export const getModel = () => {
+	const apiKey = getApiKey("openai");
+
+	if (!apiKey) {
+		throw new Error("OpenAI API key is not set");
+	}
+
+	const openai = createOpenAI({ apiKey });
+
+	return openai("gpt-5-nano");
+};
+
 export const generateResumeData = async (
-	openaiApiKey: string,
 	prompt: string,
+	model: LanguageModel,
 ): Promise<ResumeData> => {
-	const openai = createOpenAI({ apiKey: openaiApiKey });
 	const { object, response, warnings } = await generateObject({
-		model: openai("gpt-5-nano"),
+		model: model,
 		schema: resumeSchema,
 		prompt: `${instructions}\n${prompt}`,
 	});

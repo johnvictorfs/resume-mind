@@ -1,7 +1,11 @@
 "use client";
 import Head from "next/head";
 import { useState } from "react";
-import { _exampleResumeData, generateResumeData } from "~/ai/generator";
+import {
+	_exampleResumeData,
+	generateResumeData,
+	getModel,
+} from "~/ai/generator";
 import { Preview } from "~/components/pdf/resume/preview";
 import type { ResumeData } from "~/schemas/resume";
 import { authClient } from "~/server/better-auth/client";
@@ -40,7 +44,8 @@ export default function ResumePreviewPage() {
 	const generate = async () => {
 		setLoading(true);
 		try {
-			const data = await generateResumeData(openaiApiKey, prompt);
+			const model = getModel();
+			const data = await generateResumeData(prompt, model);
 
 			setResumeData(data);
 		} finally {
