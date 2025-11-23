@@ -22,3 +22,9 @@ export const baseStyles = StyleSheet.create({
 		marginBottom: 10,
 	},
 });
+
+export const fontIcons = {
+	github: "",
+	linkedin: "",
+	email: "",
+};

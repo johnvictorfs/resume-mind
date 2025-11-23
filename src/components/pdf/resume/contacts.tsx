@@ -1,6 +1,6 @@
 import { Font, Link, StyleSheet, View } from "@react-pdf/renderer";
 import type { ResumeData } from "~/schemas/resume";
-import { fontSize, getBaseFontFamily } from "../styles";
+import { fontIcons, fontSize, getBaseFontFamily } from "../styles";
 
 Font.register({
 	family: "FontAwesomeBrands",
@@ -22,12 +22,6 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 });
-
-export const fontIcons = {
-	github: "",
-	linkedin: "",
-	email: "",
-};
 
 export const Contacts = ({ resumeData }: { resumeData: ResumeData }) => (
 	<View style={styles.contacts}>
