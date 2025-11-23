@@ -3,11 +3,12 @@
 import { Download, RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Preview } from "~/components/pdf/resume/preview";
 import { Button } from "~/components/ui/button";
 import { useDebounce } from "~/lib/input";
-import { getResumeData, saveResumeData } from "~/lib/storage";
+import { getApiKey, getResumeData, saveResumeData } from "~/lib/storage";
 import type { ResumeData } from "~/schemas/resume";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";
@@ -39,6 +40,7 @@ export default function ResumeBuilder() {
 	const [showImport, setShowImport] = useState(false);
 	const debouncedData = useDebounce(data, 800);
 	const debouncedGenerating = useDebounce(isGenerating, 800);
+	const router = useRouter();
 
 	useEffect(() => {
 		const existingResumeData = getResumeData();
@@ -64,6 +66,16 @@ export default function ResumeBuilder() {
 	function updateData(newData: ResumeData) {
 		setData(newData);
 		saveResumeData(newData);
+	}
+
+	function goToImport() {
+		const apiKey = getApiKey();
+
+		if (!apiKey) {
+			router.push("/");
+		} else {
+			setShowImport(true);
+		}
 	}
 
 	const { document, domRender: PreviewRender } = Preview({
@@ -107,7 +119,7 @@ export default function ResumeBuilder() {
 									<div className="flex items-center gap-2">
 										<Button
 											className="text-muted-foreground hover:text-white"
-											onClick={() => setShowImport(true)}
+											onClick={goToImport}
 											size="sm"
 											variant="ghost"
 										>
