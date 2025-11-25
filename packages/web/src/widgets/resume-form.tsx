@@ -3,7 +3,14 @@
 import type { ResumeData } from "@local/schemas";
 import { format } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Plus, Sparkles, Trash2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Info,
+  Plus,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
 import type React from "react";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -45,6 +52,11 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
 
   return (
     <div className="space-y-8 p-4">
+      <div className="rounded-md border border-blue-700 bg-blue-900/20 p-3 text-blue-300 text-sm">
+        <Info className="mr-2 mb-0.5 inline h-4 w-4 text-blue-400" />
+        Your information is auto-saved locally in your browser
+      </div>
+
       {/* Personal Info Section */}
       <Section title="Personal Information">
         <div className="grid grid-cols-2 gap-4">
