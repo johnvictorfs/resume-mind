@@ -94,23 +94,29 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
       {/* Summary Section */}
       <Section
         action={
-          <Button
-            className="h-8 text-primary hover:bg-primary/10 hover:text-primary"
-            size="sm"
-            variant="ghost"
-          >
-            <Sparkles className="mr-1 h-3 w-3" />
-            Enhance
-          </Button>
+          <div title="Coming soon">
+            <Button
+              className="h-8 text-primary hover:bg-primary/10 hover:text-primary"
+              disabled
+              size="sm"
+              variant="ghost"
+            >
+              <Sparkles className="mr-1 h-3 w-3" />
+              Enhance
+            </Button>
+          </div>
         }
         title="Professional Summary"
       >
-        <Textarea
-          className="min-h-[100px]"
-          onChange={(e) => handleChange("summary", e.target.value)}
-          placeholder="Brief overview of your career..."
-          value={data.summary || ""}
-        />
+        <div title="Coming soon">
+          <Textarea
+            className="min-h-[100px]"
+            disabled
+            onChange={(e) => handleChange("summary", e.target.value)}
+            placeholder="Brief overview of your career..."
+            value={data.summary || ""}
+          />
+        </div>
       </Section>
 
       {/* Experience Section */}
@@ -231,6 +237,16 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                         }}
                         value={point}
                       />
+
+                      <Button
+                        disabled
+                        size="icon"
+                        title="Enhance"
+                        variant="ghost"
+                      >
+                        <Sparkles className="h-4 w-4" />
+                      </Button>
+
                       <Button
                         onClick={() => {
                           const newExp = [...(data.experience || [])];
@@ -249,6 +265,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                           handleChange("experience", newExp);
                         }}
                         size="icon"
+                        title="Delete Bullet Point"
                         variant="ghost"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -277,7 +294,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                 </div>
               </div>
               <Button
-                className="-right-2 -top-2 absolute h-6 w-6 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                className="-right-2 -top-2 absolute h-6 w-6 pr-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                 onClick={() => {
                   const newExp = (data.experience || []).filter(
                     (_, i) => i !== index,
@@ -285,6 +302,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                   handleChange("experience", newExp);
                 }}
                 size="icon"
+                title="Delete Experience Entry"
                 variant="ghost"
               >
                 <Trash2 className="h-3 w-3" />
@@ -406,7 +424,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                 </div>
               </div>
               <Button
-                className="-right-2 -top-2 absolute h-6 w-6 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
+                className="-right-2 -top-2 absolute h-6 w-6 pr-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive"
                 onClick={() => {
                   const newEdu = (data.education || []).filter(
                     (_, i) => i !== index,
@@ -414,6 +432,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
                   handleChange("education", newEdu);
                 }}
                 size="icon"
+                title="Delete Education Entry"
                 variant="ghost"
               >
                 <Trash2 className="h-3 w-3" />

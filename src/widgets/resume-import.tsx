@@ -147,20 +147,24 @@ export function ResumeImport({ onImport, onCancel }: ResumeImportProps) {
                 onChange={handleFileUpload}
                 type="file"
               />
-              <Button
-                className="mt-4"
-                disabled={isProcessing}
-                onClick={() => document.getElementById("file-upload")?.click()}
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing PDF...
-                  </>
-                ) : (
-                  "Select PDF File"
-                )}
-              </Button>
+              <div title="Coming soon">
+                <Button
+                  className="mt-4"
+                  disabled
+                  onClick={() =>
+                    document.getElementById("file-upload")?.click()
+                  }
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Analyzing PDF...
+                    </>
+                  ) : (
+                    "Select PDF File"
+                  )}
+                </Button>
+              </div>
             </motion.div>
           ) : (
             <motion.div

@@ -140,10 +140,11 @@ export default function ResumeBuilder() {
                   <h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
                     Preview
                   </h2>
-                  <div className="flex gap-3">
+                  {/* TODO: Implement */}
+                  <div className="flex gap-3" title="Coming soon">
                     <Button
                       className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary-foreground"
-                      disabled={isGenerating}
+                      disabled
                       onClick={handleGenerate}
                       variant="outline"
                     >
