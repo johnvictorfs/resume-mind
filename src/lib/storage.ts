@@ -1,4 +1,5 @@
-import type { ResumeData } from "~/schemas/resume";
+import { looseResumeToResume, resumeToLoose } from "~/adapters/resume";
+import { looseResumeSchema, type ResumeData } from "~/schemas/resume";
 
 export type ApiKeyType = "openai";
 
@@ -24,9 +25,25 @@ export function saveApiKey(key: string, type: ApiKeyType = "openai") {
 }
 
 export function saveResumeData(data: ResumeData) {
-	// TODO: Loose validation before saving
-	localStorage.setItem(storageKeys.resumeData, JSON.stringify(data));
+	const {
+		success,
+		data: parsedData,
+		error,
+	} = looseResumeSchema.safeParse(resumeToLoose(data));
+
+	if (success) {
+		localStorage.setItem(storageKeys.resumeData, JSON.stringify(parsedData));
+
+		return parsedData;
+	}
+
+	console.error("Failed to save resume data:", error);
+
 	return data;
+}
+
+export function clearResumeData() {
+	localStorage.removeItem(storageKeys.resumeData);
 }
 
 export function getResumeData(): ResumeData | null {
@@ -42,10 +59,16 @@ export function getResumeData(): ResumeData | null {
 	try {
 		const parsed = JSON.parse(data);
 
-		// TODO: Loose validation before returning
-		return parsed;
+		const { success, data: validData } = looseResumeSchema.safeParse(parsed);
+
+		if (!success) {
+			clearResumeData();
+			return null;
+		}
+
+		return looseResumeToResume(validData);
 	} catch {
-		localStorage.removeItem(storageKeys.resumeData);
+		clearResumeData();
 		return null;
 	}
 }

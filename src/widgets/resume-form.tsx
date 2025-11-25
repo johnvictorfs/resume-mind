@@ -53,7 +53,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
 						<Input
 							onChange={(e) => handleChange("name", e.target.value)}
 							placeholder="John Doe"
-							value={data.name}
+							value={data.name || ""}
 						/>
 					</div>
 					<div className="space-y-2">
@@ -61,7 +61,7 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
 						<Input
 							onChange={(e) => handleChange("email", e.target.value)}
 							placeholder="john@example.com"
-							value={data.email}
+							value={data.email || ""}
 						/>
 					</div>
 					<div className="space-y-2">

@@ -8,7 +8,7 @@ const instructions = `
 - Create appropriate bullet points for each experience
 - Leave unknowns as null
 - Input dates in ISO format like 2025-09-11T14:30:00Z
-- Add https:// to links
+- Keep links without https:// like github.com/username
 `;
 
 export const getModel = () => {

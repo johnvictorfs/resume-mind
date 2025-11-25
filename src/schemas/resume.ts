@@ -19,10 +19,10 @@ const educationSchema = z.object({
 export const resumeSchema = z.object({
 	name: z.string(),
 	summary: z.string().nullable(),
-	email: z.string().email(),
+	email: z.string().email().nullable(),
 	contacts: z.object({
-		linkedin: z.string().url().nullable(),
-		github: z.string().url().nullable(),
+		linkedin: z.string().nullable(),
+		github: z.string().nullable(),
 	}),
 	phone: z.string().nullable(),
 	skills: z.array(z.string()),
@@ -30,6 +30,22 @@ export const resumeSchema = z.object({
 	education: z.array(educationSchema).nullable(),
 });
 
+export const looseResumeSchema = z.object({
+	name: z.string().optional(),
+	summary: z.string().nullable().optional(),
+	email: z.string().nullable().optional(),
+	contacts: z.object({
+		linkedin: z.string().nullable().optional(),
+		github: z.string().nullable().optional(),
+	}),
+	phone: z.string().nullable().optional(),
+	skills: z.array(z.string()).optional(),
+	experience: z.array(experienceSchema).nullable().optional(),
+	education: z.array(educationSchema).nullable().optional(),
+});
+
 export type Experience = z.infer<typeof experienceSchema>;
 export type Education = z.infer<typeof educationSchema>;
 export type ResumeData = z.infer<typeof resumeSchema>;
+
+export type LooseResumeData = z.infer<typeof looseResumeSchema>;
