@@ -1,0 +1,19 @@
+{
+  "name": "@local/schemas",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check": "biome check .",
+    "check:unsafe": "biome check --write --unsafe .",
+    "check:write": "biome check --write ."
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
+  }
+}

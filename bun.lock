@@ -3,10 +3,46 @@
   "workspaces": {
     "": {
       "name": "resume-mind",
+    },
+    "packages/ai": {
+      "name": "@local/ai",
       "dependencies": {
         "@ai-sdk/openai": "^2.0.71",
+        "ai": "^5.0.99",
+      },
+    },
+    "packages/schemas": {
+      "name": "@local/schemas",
+      "dependencies": {
+        "zod": "^3.24.2",
+      },
+    },
+    "packages/server": {
+      "name": "@local/server",
+      "dependencies": {
         "@auth/drizzle-adapter": "^1.7.2",
         "@libsql/client": "^0.14.0",
+        "@t3-oss/env-nextjs": "^0.12.0",
+        "@trpc/server": "^11.0.0",
+        "better-auth": "^1.3",
+        "drizzle-orm": "^0.41.0",
+        "superjson": "^2.2.1",
+        "zod": "^3.24.2",
+      },
+      "devDependencies": {
+        "@biomejs/biome": "^2.2.5",
+        "@types/node": "^20.14.10",
+        "drizzle-kit": "^0.30.5",
+        "typescript": "^5.8.2",
+      },
+    },
+    "packages/web": {
+      "name": "@local/web",
+      "dependencies": {
+        "@libsql/client": "^0.14.0",
+        "@local/ai": "workspace:*",
+        "@local/schemas": "workspace:*",
+        "@local/server": "workspace:*",
         "@radix-ui/react-label": "^2.1.8",
         "@radix-ui/react-slot": "^1.2.4",
         "@react-pdf/renderer": "^4.3.1",
@@ -15,12 +51,9 @@
         "@trpc/client": "^11.0.0",
         "@trpc/next": "^11.0.0",
         "@trpc/react-query": "^11.0.0",
-        "@trpc/server": "^11.0.0",
-        "ai": "^5.0.99",
         "better-auth": "^1.3",
         "class-variance-authority": "^0.7.1",
         "date-fns": "^4.1.0",
-        "drizzle-orm": "^0.41.0",
         "framer-motion": "^12.23.24",
         "lucide-react": "^0.554.0",
         "next": "^15.2.3",
@@ -37,7 +70,6 @@
         "@types/node": "^20.14.10",
         "@types/react": "^19.0.0",
         "@types/react-dom": "^19.0.0",
-        "drizzle-kit": "^0.30.5",
         "postcss": "^8.5.3",
         "tailwindcss": "^4.0.15",
         "typescript": "^5.8.2",
@@ -228,6 +260,14 @@
     "@libsql/linux-x64-musl": ["@libsql/linux-x64-musl@0.4.7", "", { "os": "linux", "cpu": "x64" }, "sha512-nI6tpS1t6WzGAt1Kx1n1HsvtBbZ+jHn0m7ogNNT6pQHZQj7AFFTIMeDQw/i/Nt5H38np1GVRNsFe99eSIMs9XA=="],
 
     "@libsql/win32-x64-msvc": ["@libsql/win32-x64-msvc@0.4.7", "", { "os": "win32", "cpu": "x64" }, "sha512-7pJzOWzPm6oJUxml+PCDRzYQ4A1hTMHAciTAHfFK4fkbDZX33nWPVG7Y3vqdKtslcwAzwmrNDc6sXy2nwWnbiw=="],
+
+    "@local/ai": ["@local/ai@workspace:packages/ai"],
+
+    "@local/schemas": ["@local/schemas@workspace:packages/schemas"],
+
+    "@local/server": ["@local/server@workspace:packages/server"],
+
+    "@local/web": ["@local/web@workspace:packages/web"],
 
     "@neon-rs/load": ["@neon-rs/load@0.0.4", "", {}, "sha512-kTPhdZyTQxB+2wpiRcFWrDcejc4JI6tkPuS7UZCG4l6Zvc5kU/gGQ/ozvHTh1XR5tS+UlfAfGuPajjzQjCiHCw=="],
 
