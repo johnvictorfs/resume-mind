@@ -2,14 +2,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { type ResumeData, resumeSchema } from "@local/schemas";
 import { generateObject, type LanguageModel } from "ai";
 import { getApiKey } from "~/lib/storage";
-
-const instructions = `
-- Use the user information below to build a structure resume
-- Create appropriate bullet points for each experience
-- Leave unknowns as null
-- Input dates in ISO format like 2025-09-11T14:30:00Z
-- Keep links without https:// like github.com/username
-`;
+import { textToStructuredResumeData } from "./prompts";
 
 export const getModel = () => {
   const apiKey = getApiKey("openai");
@@ -30,7 +23,7 @@ export const generateResumeData = async (
   const { object, response, warnings } = await generateObject({
     model: model,
     schema: resumeSchema,
-    prompt: `${instructions}\n${prompt}`,
+    prompt: `${textToStructuredResumeData}\n${prompt}`,
   });
 
   console.debug("AI Response:", response);
