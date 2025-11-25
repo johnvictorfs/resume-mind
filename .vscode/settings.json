@@ -1,5 +1,6 @@
 {
-	"editor.defaultFormatter": "biomejs.biome",
-	"editor.formatOnSave": true,
-	"files.insertFinalNewline": true
+  "editor.defaultFormatter": "biomejs.biome",
+  "biome.configurationPath": "biome.jsonc",
+  "editor.formatOnSave": true,
+  "files.insertFinalNewline": true
 }

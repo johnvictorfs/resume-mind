@@ -4,71 +4,71 @@ import { looseResumeSchema, type ResumeData } from "~/schemas/resume";
 export type ApiKeyType = "openai";
 
 const storageKeys = {
-	apiKey: {
-		openai: "openai_api_key",
-	},
-	resumeData: "resume_data",
+  apiKey: {
+    openai: "openai_api_key",
+  },
+  resumeData: "resume_data",
 } as const;
 
 export function getApiKey(type: ApiKeyType = "openai") {
-	if (typeof window === "undefined") {
-		return null;
-	}
+  if (typeof window === "undefined") {
+    return null;
+  }
 
-	return localStorage.getItem(storageKeys.apiKey[type]);
+  return localStorage.getItem(storageKeys.apiKey[type]);
 }
 
 export function saveApiKey(key: string, type: ApiKeyType = "openai") {
-	localStorage.setItem(storageKeys.apiKey[type], key);
+  localStorage.setItem(storageKeys.apiKey[type], key);
 
-	return key;
+  return key;
 }
 
 export function saveResumeData(data: ResumeData) {
-	const {
-		success,
-		data: parsedData,
-		error,
-	} = looseResumeSchema.safeParse(resumeToLoose(data));
+  const {
+    success,
+    data: parsedData,
+    error,
+  } = looseResumeSchema.safeParse(resumeToLoose(data));
 
-	if (success) {
-		localStorage.setItem(storageKeys.resumeData, JSON.stringify(parsedData));
+  if (success) {
+    localStorage.setItem(storageKeys.resumeData, JSON.stringify(parsedData));
 
-		return parsedData;
-	}
+    return parsedData;
+  }
 
-	console.error("Failed to save resume data:", error);
+  console.error("Failed to save resume data:", error);
 
-	return data;
+  return data;
 }
 
 export function clearResumeData() {
-	localStorage.removeItem(storageKeys.resumeData);
+  localStorage.removeItem(storageKeys.resumeData);
 }
 
 export function getResumeData(): ResumeData | null {
-	if (typeof window === "undefined") {
-		return null;
-	}
+  if (typeof window === "undefined") {
+    return null;
+  }
 
-	const data = localStorage.getItem(storageKeys.resumeData);
-	if (!data) {
-		return null;
-	}
+  const data = localStorage.getItem(storageKeys.resumeData);
+  if (!data) {
+    return null;
+  }
 
-	try {
-		const parsed = JSON.parse(data);
+  try {
+    const parsed = JSON.parse(data);
 
-		const { success, data: validData } = looseResumeSchema.safeParse(parsed);
+    const { success, data: validData } = looseResumeSchema.safeParse(parsed);
 
-		if (!success) {
-			clearResumeData();
-			return null;
-		}
+    if (!success) {
+      clearResumeData();
+      return null;
+    }
 
-		return looseResumeToResume(validData);
-	} catch {
-		clearResumeData();
-		return null;
-	}
+    return looseResumeToResume(validData);
+  } catch {
+    clearResumeData();
+    return null;
+  }
 }

@@ -12,74 +12,74 @@ const instructions = `
 `;
 
 export const getModel = () => {
-	const apiKey = getApiKey("openai");
+  const apiKey = getApiKey("openai");
 
-	if (!apiKey) {
-		throw new Error("OpenAI API key is not set");
-	}
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not set");
+  }
 
-	const openai = createOpenAI({ apiKey });
+  const openai = createOpenAI({ apiKey });
 
-	return openai("gpt-5-nano");
+  return openai("gpt-5-nano");
 };
 
 export const generateResumeData = async (
-	prompt: string,
-	model: LanguageModel,
+  prompt: string,
+  model: LanguageModel,
 ): Promise<ResumeData> => {
-	const { object, response, warnings } = await generateObject({
-		model: model,
-		schema: resumeSchema,
-		prompt: `${instructions}\n${prompt}`,
-	});
+  const { object, response, warnings } = await generateObject({
+    model: model,
+    schema: resumeSchema,
+    prompt: `${instructions}\n${prompt}`,
+  });
 
-	console.debug("AI Response:", response);
-	if (warnings) {
-		console.warn("AI Warnings:", warnings);
-	}
+  console.debug("AI Response:", response);
+  if (warnings) {
+    console.warn("AI Warnings:", warnings);
+  }
 
-	return object;
+  return object;
 };
 
 export const _exampleResumeData: ResumeData = {
-	name: "John Doe",
-	summary: null,
-	email: "john.doe@email.com",
-	contacts: {
-		linkedin: "https://linkedin.com/in/johndoe",
-		github: "https://github.com/johndoe",
-	},
-	phone: "+1 234 567 8901",
-	skills: ["JavaScript", "TypeScript", "React", "Node.js"],
-	experience: [
-		{
-			company: "Tech Corp",
-			role: "Senior Software Engineer",
-			startAt: new Date("2020-01-01"),
-			endAt: null,
-			bulletPoints: [
-				"Led a team of 5 engineers to develop a scalable web application.",
-				"Improved application performance by 30% through code optimization.",
-			],
-		},
-		{
-			company: "Web Solutions",
-			role: "Frontend Developer",
-			startAt: new Date("2018-06-01"),
-			endAt: new Date("2019-12-01"),
-			bulletPoints: [
-				"Developed responsive user interfaces using React and Redux.",
-				"Collaborated with designers to enhance UX/UI design.",
-			],
-		},
-	],
-	education: [
-		{
-			institution: "State University",
-			degree: "B.Sc. in Computer Science",
-			startAt: new Date("2015-09-01"),
-			endAt: new Date("2019-06-01"),
-			notes: "Graduated with Honors",
-		},
-	],
+  name: "John Doe",
+  summary: null,
+  email: "john.doe@email.com",
+  contacts: {
+    linkedin: "https://linkedin.com/in/johndoe",
+    github: "https://github.com/johndoe",
+  },
+  phone: "+1 234 567 8901",
+  skills: ["JavaScript", "TypeScript", "React", "Node.js"],
+  experience: [
+    {
+      company: "Tech Corp",
+      role: "Senior Software Engineer",
+      startAt: new Date("2020-01-01"),
+      endAt: null,
+      bulletPoints: [
+        "Led a team of 5 engineers to develop a scalable web application.",
+        "Improved application performance by 30% through code optimization.",
+      ],
+    },
+    {
+      company: "Web Solutions",
+      role: "Frontend Developer",
+      startAt: new Date("2018-06-01"),
+      endAt: new Date("2019-12-01"),
+      bulletPoints: [
+        "Developed responsive user interfaces using React and Redux.",
+        "Collaborated with designers to enhance UX/UI design.",
+      ],
+    },
+  ],
+  education: [
+    {
+      institution: "State University",
+      degree: "B.Sc. in Computer Science",
+      startAt: new Date("2015-09-01"),
+      endAt: new Date("2019-06-01"),
+      notes: "Graduated with Honors",
+    },
+  ],
 };
