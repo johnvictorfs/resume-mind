@@ -3,6 +3,7 @@ import type { ResumeData } from "~/schemas/resume";
 import { Contacts } from "./contacts";
 import { EducationSection } from "./education";
 import { Experiences } from "./experiences";
+import { SkillsSection } from "./skills";
 
 const styles = StyleSheet.create({
   document: {
@@ -38,13 +39,23 @@ export const Resume = ({ resumeData }: { resumeData: ResumeData }) => (
         <ResumeHeader resumeData={resumeData} />
       </View>
 
-      <View style={{ marginBottom: 20 }}>
-        <Experiences experience={resumeData.experience} />
-      </View>
+      {!!resumeData.skills?.length && (
+        <View>
+          <SkillsSection skills={resumeData.skills} />
+        </View>
+      )}
 
-      <View>
-        <EducationSection education={resumeData.education} />
-      </View>
+      {!!resumeData.experience?.length && (
+        <View style={{ marginBottom: 20 }}>
+          <Experiences experience={resumeData.experience} />
+        </View>
+      )}
+
+      {!!resumeData.education?.length && (
+        <View style={{ marginBottom: 20 }}>
+          <EducationSection education={resumeData.education} />
+        </View>
+      )}
     </Page>
   </Document>
 );

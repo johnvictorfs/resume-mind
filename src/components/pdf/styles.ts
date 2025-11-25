@@ -9,7 +9,7 @@ export const fontSize = {
   normal: 12,
   large: 14,
   extraLarge: 18,
-};
+} as const;
 
 export const baseStyles = StyleSheet.create({
   sectionHeader: {
@@ -27,4 +27,4 @@ export const fontIcons = {
   github: "",
   linkedin: "",
   email: "",
-};
+} as const;

@@ -464,22 +464,31 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
       {/* Skills Section */}
       <Section title="Skills">
         <div className="space-y-4">
-          <Input
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                const val = e.currentTarget.value.trim();
-                if (val) {
-                  const newSkills = val
-                    .split(",")
-                    .map((s) => s.trim())
-                    .filter(Boolean);
-                  handleChange("skills", [...data.skills, ...newSkills]);
-                  e.currentTarget.value = "";
+          <div className="flex items-center gap-2">
+            <Input
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  const val = e.currentTarget.value.trim();
+                  if (val) {
+                    const newSkills = val
+                      .split(",")
+                      .map((s) => s.trim())
+                      .filter(Boolean);
+                    handleChange("skills", [...data.skills, ...newSkills]);
+                    e.currentTarget.value = "";
+                  }
                 }
-              }
-            }}
-            placeholder="Add skills (comma separated)..."
-          />
+              }}
+              placeholder="Add skills (comma separated)..."
+            />
+
+            <div title="Coming soon">
+              <Button disabled size="sm" variant="ghost">
+                <Sparkles className="mr-1 h-3 w-3" />
+                Add from experiences
+              </Button>
+            </div>
+          </div>
           <div className="flex flex-wrap gap-2">
             {data.skills.map((skill, index) => (
               <span
