@@ -103,7 +103,7 @@ export default function ResumeBuilder() {
 				<link href="/favicon.ico" rel="icon" />
 			</Head>
 
-			<main className="relative min-h-screen bg-background text-foreground">
+			<main className="relative bg-background text-foreground">
 				<BackgroundEffect />
 				<Header />
 
