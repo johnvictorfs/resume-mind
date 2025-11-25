@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#0f0f1e"></rect>
+  
+  <!-- Document outline -->
+  <rect x="6" y="4" width="20" height="24" rx="1" fill="none" stroke="#6366f1" stroke-width="1.5"></rect>
+  
+  <!-- Document lines -->
+  <line x1="8" y1="8" x2="24" y2="8" stroke="#6366f1" stroke-width="1" stroke-linecap="round"></line>
+  <line x1="8" y1="12" x2="24" y2="12" stroke="#8b5cf6" stroke-width="1" stroke-linecap="round"></line>
+  <line x1="8" y1="16" x2="22" y2="16" stroke="#a78bfa" stroke-width="1" stroke-linecap="round"></line>
+  <line x1="8" y1="20" x2="20" y2="20" stroke="#a78bfa" stroke-width="1" stroke-linecap="round"></line>
+  
+  <!-- AI spark accent -->
+  <path d="M 24 6 L 25 7.5 L 26.5 8 L 25 8.5 L 24 10 L 23 8.5 L 21.5 8 L 23 7.5 Z" fill="#ec4899"></path>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
