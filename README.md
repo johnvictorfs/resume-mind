@@ -10,6 +10,9 @@ Create or upgrade your Resume with a user-friendly interface, with the optional 
 ## Run with Docker compose
 
 ```bash
+# Setup environment variables
+cp .env.example .env # then edit with prefered editor
+
 # By default it will be available at https://localhost:3000
 # Edit docker-compose.yaml to change the exposed port
 docker compose up -d
