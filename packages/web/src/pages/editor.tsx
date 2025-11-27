@@ -5,11 +5,10 @@ import { RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { Preview } from "~/components/pdf/resume/preview";
 import { Button } from "~/components/ui/button";
-import { useDebounce } from "~/lib/input";
-import { getApiKey, getResumeData, saveResumeData } from "~/lib/storage";
+import { getApiKey } from "~/lib/storage";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";
 import { ResumeForm } from "~/widgets/resume-form/form";
@@ -38,18 +37,7 @@ export default function ResumeBuilder() {
   const [data, setData] = useState<ResumeData>(initialData);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showImport, setShowImport] = useState(false);
-  const debounceTime = 1000;
-  const debouncedData = useDebounce(data, debounceTime);
-  const debouncedGenerating = useDebounce(isGenerating, debounceTime);
   const router = useRouter();
-
-  useEffect(() => {
-    const existingResumeData = getResumeData();
-
-    if (existingResumeData) {
-      setData(existingResumeData);
-    }
-  }, []);
 
   const handleGenerate = useCallback(() => {
     setIsGenerating(true);
@@ -68,10 +56,6 @@ export default function ResumeBuilder() {
     setData(newData);
   }
 
-  useEffect(() => {
-    saveResumeData(debouncedData);
-  }, [debouncedData]);
-
   function goToImport() {
     const apiKey = getApiKey();
 
@@ -86,11 +70,11 @@ export default function ResumeBuilder() {
     return (
       <RenderPreview
         handleGenerate={handleGenerate}
-        isGenerating={debouncedGenerating}
-        resumeData={debouncedData}
+        isGenerating={isGenerating}
+        resumeData={data}
       />
     );
-  }, [handleGenerate, debouncedGenerating, debouncedData]);
+  }, [handleGenerate, isGenerating, data]);
 
   if (showImport) {
     return (
@@ -139,7 +123,7 @@ export default function ResumeBuilder() {
                 </div>
 
                 <div className="custom-scrollbar flex-1 overflow-y-auto rounded-xl border border-white/10 bg-card/50 p-1 pr-2">
-                  <ResumeForm data={data} onChange={updateData} />
+                  <ResumeForm onChange={updateData} />
                 </div>
               </div>
 

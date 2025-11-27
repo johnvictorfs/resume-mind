@@ -2,36 +2,68 @@
 
 import type { ResumeData } from "@local/schemas";
 import { Info, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Textarea } from "~/components/ui/textarea";
+import { useDebounce } from "~/lib/input";
+import { getResumeData, saveResumeData } from "~/lib/storage";
 import { EducationSection } from "./education";
 import { ExperiencesSection } from "./experiences";
 import { Section } from "./section";
 import { SkillsSection } from "./skills";
 
 interface ResumeFormProps {
-  data: ResumeData;
   onChange: (data: ResumeData) => void;
 }
 
-export function ResumeForm({ data, onChange }: ResumeFormProps) {
+const initialData: ResumeData = {
+  contacts: {
+    github: "",
+    linkedin: "",
+  },
+  skills: [],
+  experience: [],
+  education: [],
+  email: "",
+  name: "",
+  phone: "",
+  summary: "",
+} as const;
+
+export function ResumeForm({ onChange }: ResumeFormProps) {
+  const [data, setData] = useState<ResumeData>(initialData);
+  const debouncedData = useDebounce(data, 1000);
+
+  useEffect(() => {
+    const existingResumeData = getResumeData();
+
+    if (existingResumeData) {
+      setData(existingResumeData);
+    }
+  }, []);
+
+  useEffect(() => {
+    onChange(debouncedData);
+    saveResumeData(debouncedData);
+  }, [debouncedData, onChange]);
+
   const handleChange = (
     section: keyof ResumeData,
     value: ResumeData[keyof ResumeData],
   ) => {
-    onChange({ ...data, [section]: value });
+    setData((prevData) => ({ ...prevData, [section]: value }));
   };
 
   const handleContactChange = (field: string, value: string) => {
-    onChange({
-      ...data,
+    setData((prevData) => ({
+      ...prevData,
       contacts: {
-        ...data.contacts,
+        ...prevData.contacts,
         [field]: value,
       },
-    });
+    }));
   };
 
   return (
@@ -63,25 +95,25 @@ export function ResumeForm({ data, onChange }: ResumeFormProps) {
           <div className="space-y-2">
             <Label>Phone</Label>
             <Input
+              defaultValue={data.phone || ""}
               onChange={(e) => handleChange("phone", e.target.value)}
               placeholder="+1 234 567 890"
-              value={data.phone || ""}
             />
           </div>
           <div className="space-y-2">
             <Label>LinkedIn</Label>
             <Input
+              defaultValue={data.contacts.linkedin || ""}
               onChange={(e) => handleContactChange("linkedin", e.target.value)}
               placeholder="linkedin.com/in/johndoe"
-              value={data.contacts.linkedin || ""}
             />
           </div>
           <div className="space-y-2">
             <Label>GitHub</Label>
             <Input
+              defaultValue={data.contacts.github || ""}
               onChange={(e) => handleContactChange("github", e.target.value)}
               placeholder="github.com/johndoe"
-              value={data.contacts.github || ""}
             />
           </div>
         </div>
