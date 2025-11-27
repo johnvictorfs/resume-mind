@@ -184,7 +184,7 @@ function RenderPreview({
             )}
             {isGenerating ? "Optimizing..." : "AI Enhance"}
           </Button>
-          <DownloadLinkPDF document={document} />
+          <DownloadLinkPDF document={document} resumeData={resumeData} />
         </div>
       </div>
 
