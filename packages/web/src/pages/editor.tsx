@@ -5,7 +5,7 @@ import { RefreshCw, Upload, Wand2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Preview } from "~/components/pdf/resume/preview";
 import { Button } from "~/components/ui/button";
 import { useDebounce } from "~/lib/input";
@@ -152,48 +152,50 @@ export default function ResumeBuilder() {
   );
 }
 
-function RenderPreview({
-  resumeData,
-  isGenerating,
-  handleGenerate,
-}: {
-  resumeData: ResumeData;
-  isGenerating: boolean;
-  handleGenerate: () => void;
-}) {
-  const { document, domRender: PreviewRender } = Preview({
+const RenderPreview = memo(
+  ({
     resumeData,
     isGenerating,
-  });
+    handleGenerate,
+  }: {
+    resumeData: ResumeData;
+    isGenerating: boolean;
+    handleGenerate: () => void;
+  }) => {
+    const { document, domRender: PreviewRender } = Preview({
+      resumeData,
+      isGenerating,
+    });
 
-  return (
-    <div className="flex h-full flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
-          Preview
-        </h2>
-        {/* TODO: Implement */}
-        <div className="flex gap-3" title="Coming soon">
-          <Button
-            className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary-foreground"
-            disabled
-            onClick={handleGenerate}
-            variant="outline"
-          >
-            {isGenerating ? (
-              <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Wand2 className="mr-2 h-4 w-4" />
-            )}
-            {isGenerating ? "Optimizing..." : "AI Enhance"}
-          </Button>
-          <DownloadLinkPDF document={document} resumeData={resumeData} />
+    return (
+      <div className="flex h-full flex-col gap-6">
+        <div className="flex items-center justify-between">
+          <h2 className="bg-linear-to-r from-white to-white/60 bg-clip-text font-bold text-2xl text-transparent">
+            Preview
+          </h2>
+          {/* TODO: Implement */}
+          <div className="flex gap-3" title="Coming soon">
+            <Button
+              className="border-primary/50 bg-transparent text-primary hover:bg-primary/10 hover:text-primary-foreground"
+              disabled
+              onClick={handleGenerate}
+              variant="outline"
+            >
+              {isGenerating ? (
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Wand2 className="mr-2 h-4 w-4" />
+              )}
+              {isGenerating ? "Optimizing..." : "AI Enhance"}
+            </Button>
+            <DownloadLinkPDF document={document} resumeData={resumeData} />
+          </div>
+        </div>
+
+        <div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
+          {PreviewRender}
         </div>
       </div>
-
-      <div className="group relative flex flex-1 justify-center overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] p-4">
-        {PreviewRender}
-      </div>
-    </div>
-  );
-}
+    );
+  },
+);
