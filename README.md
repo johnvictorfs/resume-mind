@@ -1,5 +1,8 @@
 # Resume Mind
 
+> [!NOTE]  
+> AI features are mostly WIP, for now only importing text to pre-generate a form + PDF is functional
+
 Create or upgrade your Resume with a user-friendly interface, with the optional help of AI.
 
 <img alt="Image" src="images/example.png" />
