@@ -2,6 +2,8 @@
 
 Create or upgrade your Resume with a user-friendly interface, with the optional help of AI.
 
+<img alt="Image" src="images/example.png" />
+
 ## Development
 
 - Requirements
