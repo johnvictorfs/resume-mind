@@ -39,7 +39,8 @@ export function EducationSection({
         {(education || []).map((edu, index) => (
           <div
             className="relative border-white/10 border-l-2 pl-4"
-            key={edu.institution + edu.degree + edu.startAt.toString()}
+            // biome-ignore lint/suspicious/noArrayIndexKey: Needs to maintain render when editing
+            key={index}
           >
             <div className="grid gap-4">
               <div className="grid grid-cols-2 gap-4">

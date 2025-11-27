@@ -37,26 +37,27 @@ export function ExperiencesSection({
         {(experience || []).map((exp, index) => (
           <div
             className="relative border-white/10 border-l-2 pl-4 transition-colors hover:border-primary/50"
-            key={exp.role + exp.company + exp.startAt.toString()}
+            // biome-ignore lint/suspicious/noArrayIndexKey: Needs to maintain render when editing
+            key={index}
           >
             <div className="grid gap-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Company</Label>
                   <Input
+                    defaultValue={exp.company}
                     onChange={(e) => {
                       handleFieldChange(index, "company", e.target.value);
                     }}
-                    value={exp.company}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>Role</Label>
                   <Input
+                    defaultValue={exp.role}
                     onChange={(e) => {
                       handleFieldChange(index, "role", e.target.value);
                     }}
-                    value={exp.role}
                   />
                 </div>
               </div>
