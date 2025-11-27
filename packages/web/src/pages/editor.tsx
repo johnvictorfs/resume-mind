@@ -66,8 +66,11 @@ export default function ResumeBuilder() {
 
   function updateData(newData: ResumeData) {
     setData(newData);
-    saveResumeData(newData);
   }
+
+  useEffect(() => {
+    saveResumeData(debouncedData);
+  }, [debouncedData]);
 
   function goToImport() {
     const apiKey = getApiKey();

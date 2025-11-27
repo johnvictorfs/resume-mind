@@ -27,15 +27,24 @@ const styles = StyleSheet.create({
   bulletPoint: {
     fontSize: fontSize.small,
   },
+  companyAndDate: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
 
 const ExperienceItem = ({ experience }: { experience: Experience }) => (
   <View>
-    <Text style={styles.company}>{experience.company}</Text>
+    <View style={styles.companyAndDate}>
+      <Text style={styles.company}>{experience.company}</Text>
+
+      <Text style={styles.dateRange}>
+        {formatResumeDateRange(experience.startAt, experience.endAt)}
+      </Text>
+    </View>
     <Text style={styles.role}>{experience.role}</Text>
-    <Text style={styles.dateRange}>
-      {formatResumeDateRange(experience.startAt, experience.endAt)}
-    </Text>
 
     {experience.bulletPoints.length > 0 && (
       <View style={styles.bulletPointContainer}>

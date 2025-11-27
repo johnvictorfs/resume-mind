@@ -88,7 +88,8 @@ export function ExperiencesSection({
               <div className="space-y-2">
                 <Label>Bullet Points</Label>
                 {exp.bulletPoints.map((point, bpIndex) => (
-                  <div className="flex gap-2" key={point}>
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Need to maintain render when editing
+                  <div className="flex gap-2" key={bpIndex}>
                     <Input
                       onChange={(e) => {
                         handleFieldChange(index, "bulletPoints", [
