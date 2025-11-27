@@ -7,6 +7,17 @@ Create or upgrade your Resume with a user-friendly interface, with the optional 
 
 <img alt="Image" src="images/example.png" />
 
+## Run with Docker compose
+
+```bash
+# Setup environment variables
+cp .env.example .env # then edit with prefered editor
+
+# By default it will be available at http://localhost:3000
+# Edit docker-compose.yaml to change the exposed port
+docker compose up -d
+```
+
 ## Development
 
 - Requirements
