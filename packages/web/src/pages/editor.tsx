@@ -12,7 +12,7 @@ import { useDebounce } from "~/lib/input";
 import { getApiKey, getResumeData, saveResumeData } from "~/lib/storage";
 import { BackgroundEffect } from "~/widgets/background-effect";
 import { Header } from "~/widgets/header";
-import { ResumeForm } from "~/widgets/resume-form";
+import { ResumeForm } from "~/widgets/resume-form/form";
 import { ResumeImport } from "~/widgets/resume-import";
 
 const DownloadLinkPDF = dynamic(

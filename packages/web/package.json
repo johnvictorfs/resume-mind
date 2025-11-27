@@ -12,11 +12,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@local/server": "workspace:*",
-    "@local/schemas": "workspace:*",
-    "@local/ai": "workspace:*",
     "@libsql/client": "^0.14.0",
+    "@local/ai": "workspace:*",
+    "@local/schemas": "workspace:*",
+    "@local/server": "workspace:*",
     "@radix-ui/react-label": "^2.1.8",
+    "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-pdf/renderer": "^4.3.1",
     "@t3-oss/env-nextjs": "^0.12.0",

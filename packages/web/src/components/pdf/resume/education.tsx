@@ -1,6 +1,6 @@
 import type { Education } from "@local/schemas";
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
-import { formatDateRange } from "~/logic/date";
+import { formatResumeDateRange } from "~/logic/date";
 import { baseStyles, fontSize } from "../styles";
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ const EducationItem = ({ education }: { education: Education }) => (
     <Text style={styles.institution}>{education.institution}</Text>
     <Text style={styles.degree}>{education.degree}</Text>
     <Text style={styles.dateRange}>
-      {formatDateRange(education.startAt, education.endAt)}
+      {formatResumeDateRange(education.startAt, education.endAt)}
     </Text>
   </View>
 );

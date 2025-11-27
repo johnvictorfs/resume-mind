@@ -5,7 +5,7 @@ import { Plus, Sparkles, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { formatDate } from "~/logic/date";
+import { MonthYearInput } from "~/components/ui/month-year-input";
 import { Section } from "./section";
 
 export function ExperiencesSection({
@@ -15,6 +15,22 @@ export function ExperiencesSection({
   experience: Experience[] | null;
   handleChange: (field: "experience", value: Experience[]) => void;
 }) {
+  function handleFieldChange<T extends keyof Experience>(
+    index: number,
+    field: T,
+    value: Experience[T] | null,
+  ) {
+    const newExp = [...(experience || [])];
+    if (!newExp[index]) {
+      throw new Error(` Experience entry not found at index ${index}`);
+    }
+    newExp[index] = {
+      ...newExp[index],
+      [field]: value,
+    };
+    handleChange("experience", newExp);
+  }
+
   return (
     <Section title="Experience">
       <div className="space-y-6">
@@ -29,17 +45,7 @@ export function ExperiencesSection({
                   <Label>Company</Label>
                   <Input
                     onChange={(e) => {
-                      const newExp = [...(experience || [])];
-                      if (!newExp[index]) {
-                        throw new Error(
-                          ` Experience entry not found at index ${index}`,
-                        );
-                      }
-                      newExp[index] = {
-                        ...newExp[index],
-                        company: e.target.value,
-                      };
-                      handleChange("experience", newExp);
+                      handleFieldChange(index, "company", e.target.value);
                     }}
                     value={exp.company}
                   />
@@ -48,17 +54,7 @@ export function ExperiencesSection({
                   <Label>Role</Label>
                   <Input
                     onChange={(e) => {
-                      const newExp = [...(experience || [])];
-                      if (!newExp[index]) {
-                        throw new Error(
-                          ` Experience entry not found at index ${index}`,
-                        );
-                      }
-                      newExp[index] = {
-                        ...newExp[index],
-                        role: e.target.value,
-                      };
-                      handleChange("experience", newExp);
+                      handleFieldChange(index, "role", e.target.value);
                     }}
                     value={exp.role}
                   />
@@ -67,42 +63,20 @@ export function ExperiencesSection({
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Start Date</Label>
-                  <Input
-                    onChange={(e) => {
-                      const newExp = [...(experience || [])];
-                      if (!newExp[index]) {
-                        throw new Error(
-                          ` Experience entry not found at index ${index}`,
-                        );
-                      }
-                      newExp[index] = {
-                        ...newExp[index],
-                        startAt: e.target.valueAsDate || new Date(),
-                      };
-                      handleChange("experience", newExp);
+                  <MonthYearInput
+                    onChange={(date) => {
+                      handleFieldChange(index, "startAt", date);
                     }}
-                    type="month"
-                    value={formatDate(exp.startAt)}
+                    value={exp.startAt}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>End Date</Label>
-                  <Input
-                    onChange={(e) => {
-                      const newExp = [...(experience || [])];
-                      if (!newExp[index]) {
-                        throw new Error(
-                          ` Experience entry not found at index ${index}`,
-                        );
-                      }
-                      newExp[index] = {
-                        ...newExp[index],
-                        endAt: e.target.valueAsDate,
-                      };
-                      handleChange("experience", newExp);
+                  <MonthYearInput
+                    onChange={(date) => {
+                      handleFieldChange(index, "endAt", date);
                     }}
-                    type="month"
-                    value={formatDate(exp.endAt)}
+                    value={exp.endAt}
                   />
                   <p className="text-[10px] text-muted-foreground">
                     Leave empty for Present
@@ -116,20 +90,11 @@ export function ExperiencesSection({
                   <div className="flex gap-2" key={point}>
                     <Input
                       onChange={(e) => {
-                        const newExp = [...(experience || [])];
-                        if (!newExp[index]) {
-                          throw new Error(
-                            ` Experience entry not found at index ${index}`,
-                          );
-                        }
-
-                        const newPoints = [...newExp[index].bulletPoints];
-                        newPoints[bpIndex] = e.target.value;
-                        newExp[index] = {
-                          ...newExp[index],
-                          bulletPoints: newPoints,
-                        };
-                        handleChange("experience", newExp);
+                        handleFieldChange(index, "bulletPoints", [
+                          ...exp.bulletPoints.slice(0, bpIndex),
+                          e.target.value,
+                          ...exp.bulletPoints.slice(bpIndex + 1),
+                        ]);
                       }}
                       value={point}
                     />
@@ -145,20 +110,10 @@ export function ExperiencesSection({
 
                     <Button
                       onClick={() => {
-                        const newExp = [...(experience || [])];
-                        if (!newExp[index]) {
-                          throw new Error(
-                            ` Experience entry not found at index ${index}`,
-                          );
-                        }
-                        const newPoints = newExp[index].bulletPoints.filter(
-                          (_, i) => i !== bpIndex,
-                        );
-                        newExp[index] = {
-                          ...newExp[index],
-                          bulletPoints: newPoints,
-                        };
-                        handleChange("experience", newExp);
+                        handleFieldChange(index, "bulletPoints", [
+                          ...exp.bulletPoints.slice(0, bpIndex),
+                          ...exp.bulletPoints.slice(bpIndex + 1),
+                        ]);
                       }}
                       size="icon"
                       title="Delete Bullet Point"
@@ -170,17 +125,10 @@ export function ExperiencesSection({
                 ))}
                 <Button
                   onClick={() => {
-                    const newExp = [...(experience || [])];
-                    if (newExp[index]) {
-                      newExp[index] = {
-                        ...newExp[index],
-                        bulletPoints: [
-                          ...newExp[index].bulletPoints,
-                          "New accomplishment",
-                        ],
-                      };
-                    }
-                    handleChange("experience", newExp);
+                    handleFieldChange(index, "bulletPoints", [
+                      ...(exp.bulletPoints || []),
+                      "New accomplishment",
+                    ]);
                   }}
                   size="sm"
                   variant="outline"

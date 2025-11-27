@@ -5,7 +5,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { formatDate } from "~/logic/date";
+import { MonthYearInput } from "~/components/ui/month-year-input";
 import { Section } from "./section";
 
 export function EducationSection({
@@ -15,6 +15,24 @@ export function EducationSection({
   education: Education[] | null;
   handleChange: (field: "education", value: Education[]) => void;
 }) {
+  function handleFieldChange<T extends keyof Education>(
+    index: number,
+    field: T,
+    value: Education[T] | null,
+  ) {
+    const newEdu = [...(education || [])];
+    if (!newEdu[index]) {
+      throw new Error(` Education entry not found at index ${index}`);
+    }
+
+    newEdu[index] = {
+      ...newEdu[index],
+      [field]: value,
+    };
+
+    handleChange("education", newEdu);
+  }
+
   return (
     <Section title="Education">
       <div className="space-y-6">
@@ -29,17 +47,7 @@ export function EducationSection({
                   <Label>Institution</Label>
                   <Input
                     onChange={(e) => {
-                      const newEdu = [...(education || [])];
-                      if (!newEdu[index]) {
-                        throw new Error(
-                          ` Education entry not found at index ${index}`,
-                        );
-                      }
-                      newEdu[index] = {
-                        ...newEdu[index],
-                        institution: e.target.value,
-                      };
-                      handleChange("education", newEdu);
+                      handleFieldChange(index, "institution", e.target.value);
                     }}
                     value={edu.institution}
                   />
@@ -48,17 +56,7 @@ export function EducationSection({
                   <Label>Degree</Label>
                   <Input
                     onChange={(e) => {
-                      const newEdu = [...(education || [])];
-                      if (!newEdu[index]) {
-                        throw new Error(
-                          ` Education entry not found at index ${index}`,
-                        );
-                      }
-                      newEdu[index] = {
-                        ...newEdu[index],
-                        degree: e.target.value,
-                      };
-                      handleChange("education", newEdu);
+                      handleFieldChange(index, "degree", e.target.value);
                     }}
                     value={edu.degree}
                   />
@@ -67,42 +65,18 @@ export function EducationSection({
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Start Date</Label>
-                  <Input
-                    onChange={(e) => {
-                      const newEdu = [...(education || [])];
-                      if (!newEdu[index]) {
-                        throw new Error(
-                          ` Education entry not found at index ${index}`,
-                        );
-                      }
-                      newEdu[index] = {
-                        ...newEdu[index],
-                        startAt: e.target.valueAsDate || new Date(),
-                      };
-                      handleChange("education", newEdu);
-                    }}
-                    type="month"
-                    value={formatDate(edu.startAt)}
+                  <MonthYearInput
+                    onChange={(date) =>
+                      handleFieldChange(index, "startAt", date)
+                    }
+                    value={edu.startAt}
                   />
                 </div>
                 <div className="space-y-2">
                   <Label>End Date</Label>
-                  <Input
-                    onChange={(e) => {
-                      const newEdu = [...(education || [])];
-                      if (!newEdu[index]) {
-                        throw new Error(
-                          ` Education entry not found at index ${index}`,
-                        );
-                      }
-                      newEdu[index] = {
-                        ...newEdu[index],
-                        endAt: e.target.valueAsDate,
-                      };
-                      handleChange("education", newEdu);
-                    }}
-                    type="month"
-                    value={formatDate(edu.endAt)}
+                  <MonthYearInput
+                    onChange={(date) => handleFieldChange(index, "endAt", date)}
+                    value={edu.endAt}
                   />
                 </div>
               </div>

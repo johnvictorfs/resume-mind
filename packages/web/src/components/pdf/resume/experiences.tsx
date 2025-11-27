@@ -1,6 +1,6 @@
 import type { Experience } from "@local/schemas";
 import { StyleSheet, Text, View } from "@react-pdf/renderer";
-import { formatDateRange } from "~/logic/date";
+import { formatResumeDateRange } from "~/logic/date";
 import { baseStyles, fontSize } from "../styles";
 
 const styles = StyleSheet.create({
@@ -34,7 +34,7 @@ const ExperienceItem = ({ experience }: { experience: Experience }) => (
     <Text style={styles.company}>{experience.company}</Text>
     <Text style={styles.role}>{experience.role}</Text>
     <Text style={styles.dateRange}>
-      {formatDateRange(experience.startAt, experience.endAt)}
+      {formatResumeDateRange(experience.startAt, experience.endAt)}
     </Text>
 
     {experience.bulletPoints.length > 0 && (
