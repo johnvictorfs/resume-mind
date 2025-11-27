@@ -33,6 +33,7 @@ Create or upgrade your Resume with a user-friendly interface, with the optional 
 
 If you are not familiar with the different technologies used in this project, please refer to the respective docs.
 
+- [React-pdf](https://react-pdf.org)
 - [Next.js](https://nextjs.org)
 - [Better auth](https://www.better-auth.com)
 - [Drizzle](https://orm.drizzle.team)
