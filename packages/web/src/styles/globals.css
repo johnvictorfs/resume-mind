@@ -153,3 +153,17 @@
     linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
+
+/* Fix for issue with scroll bar when opening select
+https://github.com/shadcn-ui/ui/issues/7334
+https://www.reddit.com/r/reactjs/comments/1fjcwkh/shadcnradix_ui_scrollbar_removal_bug/ */
+:root {
+  body[data-scroll-locked][data-scroll-locked] {
+    /* biome-ignore lint/complexity/noImportantStyles: Hack above */
+    overflow: auto !important;
+  }
+  body[data-scroll-locked] {
+    /* biome-ignore lint/complexity/noImportantStyles: Hack above */
+    margin-right: 0 !important;
+  }
+}
