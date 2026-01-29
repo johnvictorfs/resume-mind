@@ -20,6 +20,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
+  summary: {
+    fontSize: 10,
+    marginBottom: 15,
+    lineHeight: 1.5,
+    textAlign: "justify",
+  },
+  summaryTitle: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
 });
 
 const ResumeHeader = ({ resumeData }: { resumeData: ResumeData }) => (
@@ -38,6 +49,13 @@ export const Resume = ({ resumeData }: { resumeData: ResumeData }) => (
       <View style={{ marginBottom: 20 }}>
         <ResumeHeader resumeData={resumeData} />
       </View>
+
+      {resumeData.summary && (
+        <View style={{ marginBottom: 15 }}>
+          <Text style={styles.summaryTitle}>Professional Summary</Text>
+          <Text style={styles.summary}>{resumeData.summary}</Text>
+        </View>
+      )}
 
       {!!resumeData.skills?.length && (
         <View>

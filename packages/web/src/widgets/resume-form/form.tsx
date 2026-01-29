@@ -136,15 +136,12 @@ export function ResumeForm({ onChange }: ResumeFormProps) {
         }
         title="Professional Summary"
       >
-        <div title="Coming soon">
-          <Textarea
-            className="min-h-[100px]"
-            disabled
-            onChange={(e) => handleChange("summary", e.target.value)}
-            placeholder="Brief overview of your career..."
-            value={data.summary || ""}
-          />
-        </div>
+        <Textarea
+          className="min-h-[100px]"
+          onChange={(e) => handleChange("summary", e.target.value)}
+          placeholder="Brief overview of your career..."
+          value={data.summary || ""}
+        />
       </Section>
 
       <ExperiencesSection
